@@ -2,14 +2,14 @@ from aiogram import Router,F,Bot
 import asyncio
 from telethon import TelegramClient
 from telethon.sessions import StringSession
-from SpamBot.config import api_id,api_hash
+from config import api_id,api_hash
 from telethon import events
 from telethon.errors import SessionPasswordNeededError
 import csv
 import glob
-from DatabaseBot.config import ADMIN_ID,TOKEN
+from config import ADMIN_ID,TOKEN
 import os
-from DatabaseBot.database import SessionLocal, User, BroadCast
+from database import SessionLocal, User, BroadCast
 from datetime import datetime
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -348,14 +348,14 @@ async def start(message: Message):
         premium = '❌'
 
     await message.reply(
-        f'ℹ️ Вся необходимая информация о вашем профиле\n\n🏷️ <b>Имя:</b> <a href="tg://copy?text=ddddd">{message.from_user.full_name}</a>\n🆔 <b>Мой ID:</b> <a href="tg://copy?text=ddddddd">{message.from_user.id}</a>\n\n📆 <b>Регистрация:</b> <a href="tg://copy?text=fdddd">{register_at}</a>\n🔃 <b>TG Премиум:</b> {message.from_user.is_premium}\n\n🔑 <b>Подписка:</b> {premium}\n🗣️ \n💰 Твой баланс: <a href="tg://copy?text=0.00">0.00 RUB</a>\n',
+        f'ℹ️ Вся необходимая информация о вашем профиле\n\n🏷️ <b>Имя:</b> <a href="tg://copy?text=ddddd">{message.from_user.full_name}</a>\n🆔 <b>Мой ID:</b> <a href="tg://copy?text=ddddddd">{message.from_user.id}</a>\n\n📆 <b>Регистрация:</b> <a href="tg://copy?text=fdddd">{register_at}</a>\n🔃 <b>TG Премиум:</b> {message.from_user.is_premium}\n\n💳 <b>Подписка:</b> {premium}\n🗣️ \n💰 Твой баланс: <a href="tg://copy?text=0.00">0.00 RUB</a>\n',
         reply_markup=main_menu(), parse_mode="HTML")
 
 
 @router.callback_query(F.data == 'premium')
 async def premium_get(callback:CallbackQuery):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='🔑 Подписка ', callback_data='subscribe')],
+        [InlineKeyboardButton(text='💳 Подписка ', callback_data='subscribe')],
         [InlineKeyboardButton(text='🤝 Поддержка бота', callback_data='support_bot')]
     ])
     await callback.answer('')
@@ -369,7 +369,7 @@ async def premium_getting(callback: CallbackQuery):
     user = db.query(User).filter(User.telegram_id == str(callback.from_user.id)).first()
 
     if user and user.premium:
-        await callback.answer('❌ У вас уже есть подписка!', show_alert=True)
+        await callback.answer('❌ У вас уже есть 💳 Подписка!', show_alert=True)
         db.close()
         return
 
@@ -377,7 +377,7 @@ async def premium_getting(callback: CallbackQuery):
     await callback.answer('')
 
     await callback.message.answer_invoice(
-        title='🔑 Premium подписка',
+        title='💳 Premium подписка',
         description='• Доступ к расширенному поиску\n• Приоритетная поддержка',
         prices=prices,
         provider_token='',
@@ -431,7 +431,7 @@ async def process_successful_payment(message: Message):
         db.commit()
 
         await message.answer(
-            f"✅ **Premium 🔑Подписка активирована!**\n\n"
+            f"✅ **Premium 💳 Подписка активирована!**\n\n"
             f"⭐ Получено: {payment.total_amount} звёзд\n"
             f"Спасибо за покупку! 🎉",
              message_effect_id="5104841245755180586"
@@ -505,7 +505,7 @@ async def profile_answer(callback:CallbackQuery):
 
     db.close()
     await callback.message.reply(
-        f'ℹ️ Вся необходимая информация о вашем профиле\n\n🏷️ <b>Имя:</b> <a href="tg://copy?text=ddddd">{callback.from_user.full_name}</a>\n🔗<b>Username:</b> @{callback.from_user.username}\n\n🆔 <b>Мой ID:</b> <a href="tg://copy?text=ddddddd">{callback.message.from_user.id}</a>\n📆 <b>Регистрация:</b> <a href="tg://copy?text=fdddd">{register_at}</a>\n🔃 <b>TG Премиум:</b> {callback.message.from_user.is_premium}\n\n🔑 <b>Подписка:</b> {premium}\n🗣️ <b>Язык:</b> <b>{callback.message.from_user.language_code}</b>\n\n💰 Твой баланс: <a href="tg://copy?text=0.00">0.00 RUB</a>\n',
+        f'ℹ️ Вся необходимая информация о вашем профиле\n\n🏷️ <b>Имя:</b> <a href="tg://copy?text=ddddd">{callback.from_user.full_name}</a>\n🔗<b>Username:</b> @{callback.from_user.username}\n\n🆔 <b>Мой ID:</b> <a href="tg://copy?text=ddddddd">{callback.message.from_user.id}</a>\n📆 <b>Регистрация:</b> <a href="tg://copy?text=fdddd">{register_at}</a>\n🔃 <b>TG Премиум:</b> {callback.message.from_user.is_premium}\n\n💳 <b>Подписка:</b> {premium}\n🗣️ <b>Язык:</b> <b>{callback.message.from_user.language_code}</b>\n\n💰 Твой баланс: <a href="tg://copy?text=0.00">0.00 RUB</a>\n',
          parse_mode="HTML",reply_markup=main_menu())
 
 
@@ -689,7 +689,7 @@ async def profile_answer(callback:CallbackQuery):
 
     db.close()
     await callback.message.reply(
-        f'ℹ️ Вся необходимая информация о вашем профиле\n\n🏷️ <b>Имя:</b> <a href="tg://copy?text=ddddd">{callback.from_user.full_name}</a>\n🔗<b>Username:</b> @{callback.from_user.username}\n\n🆔 <b>Мой ID:</b> <a href="tg://copy?text=ddddddd">{callback.message.from_user.id}</a>\n📆 <b>Регистрация:</b> <a href="tg://copy?text=fdddd">{register_at}</a>\n🔃 <b>TG Премиум:</b> {callback.message.from_user.is_premium}\n\n🔑 <b>Подписка:</b> {premium}\n🗣️ <b>Язык:</b> <b>{callback.message.from_user.language_code}</b>\n\n💰 Твой баланс: <a href="tg://copy?text=0.00">0.00 RUB</a>\n',
+        f'ℹ️ Вся необходимая информация о вашем профиле\n\n🏷️ <b>Имя:</b> <a href="tg://copy?text=ddddd">{callback.from_user.full_name}</a>\n🔗<b>Username:</b> @{callback.from_user.username}\n\n🆔 <b>Мой ID:</b> <a href="tg://copy?text=ddddddd">{callback.message.from_user.id}</a>\n📆 <b>Регистрация:</b> <a href="tg://copy?text=fdddd">{register_at}</a>\n🔃 <b>TG Премиум:</b> {callback.message.from_user.is_premium}\n\n💳 <b>Подписка:</b> {premium}\n🗣️ <b>Язык:</b> <b>{callback.message.from_user.language_code}</b>\n\n💰 Твой баланс: <a href="tg://copy?text=0.00">0.00 RUB</a>\n',
          parse_mode="HTML",reply_markup=main_menu())
 
 
