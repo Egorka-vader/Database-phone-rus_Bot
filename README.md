@@ -1,14 +1,13 @@
-## 📨 Spam Bot
+## 🗃️ RF Database Search Bot
 
-Bot for automated message sending — bulk mailings, advertising campaigns, or reminders to users and chats.     
+Bot for fast search across Russian Federation databases — legal entities, arbitration cases, tax records, and official registries.
 
-### Features    
+### Features
 
-📤 **Bulk messaging** — send text, photos, videos, or files to multiple users at once   
-👥 **Group & channel support** — mass mailing to members or subscribers   
-⏱️ **Scheduled sending** — set date and time for automatic delivery   
-📊 **Delivery stats** — see who received, read, or blocked your messages    
-🔄 **Auto-retry** — failed messages resend automatically    
-🎯 **Target filters** — send only to active users or by language    
-🔐 **Safe mode** — delays between messages to avoid bans   
-💎 **Premium subscription** — unlimited daily sends + priority queue   
+🔍 **ЕГРЮЛ / ЕГРИП search** — get company or individual entrepreneur data by INN/OGRN
+⚖️ **Arbitration cases** — full history, judges, and claim amounts
+📊 **FNS & Rosstat data** — tax regimes, revenue, OKVED codes
+🧠 **Smart filters** — by region, date, status, or keyword
+📎 **Export results** — JSON, CSV, or formatted table
+🤖 **Telegram / API support** — use as bot or integrate into your system
+🔔 **Auto‑reports** — daily updates on changes in companies you track
